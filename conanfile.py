@@ -5,14 +5,12 @@ class BabelcConan(ConanFile):
     name = "babelc"
     version = "0.8.37"
     license = "GPL"
-    homepage = "https://github.com/fmtlib/fmt"
-    author = "Matias Sjösvärd (mr@seasword.com)"
+    homepage = "https://babelc.com"
+    author = "Mattias Sjösvärd (mr@seasword.com)"
     url = "https://bitbucket.org/MrSeasword/babelc.git"
     description = "babelc is a tool for using C++ declarations"
     topics = ("dBus", "json", "streams")
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
     generators = "cmake"
 
     def config_options(self):
