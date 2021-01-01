@@ -1,12 +1,13 @@
 
 # Table of Contents
 
-1.  [Overview](#org89a81e8)
-2.  [How to add locally](#org5ff3f9c)
-3.  [How to use](#org3d47cbc)
+1.  [Overview](#orgbbe61e8)
+2.  [How to add locally](#org3c88c16)
+3.  [How to use](#org2f12eef)
+4.  [Using virtual run env](#orgc24a5d3)
 
 
-<a id="org89a81e8"></a>
+<a id="orgbbe61e8"></a>
 
 # Overview
 
@@ -27,7 +28,7 @@ parser).
 more can be found [here](http://babelc.com).
 
 
-<a id="org5ff3f9c"></a>
+<a id="org3c88c16"></a>
 
 # How to add locally
 
@@ -46,7 +47,7 @@ To make sure everything is installed correctly do a local search
     babelc/0.8.37
 
 
-<a id="org3d47cbc"></a>
+<a id="org2f12eef"></a>
 
 # How to use
 
@@ -77,7 +78,7 @@ There is a `deploy` generator to be used, which installs the binary and the
 user manual in `babelc/bin/` directory. The above also uses cmake, so 
 that babelc executable can be run from within cmake.
 
-    conan install ../conanfile.txt --build=babelc --profile=clang -g deploy
+    conan install ../conanfile.txt --build=babelc  -g deploy
 
     .
     .
@@ -121,4 +122,72 @@ here are the deploy directory
         └── UG-babelc.pdf
     
     1 directory, 2 files
+
+
+<a id="orgc24a5d3"></a>
+
+# Using virtual run env
+
+Another way is to use the `virtualrunenv`
+
+    conan install ../conanfile.txt --build=babelc -g virtualrunenv
+
+    Requirements                                                                                                               
+      babelc/0.8.37 from local cache - Cache                                                                                 
+    Packages                                                                                                                   
+      babelc/0.8.37:82ef5eac51c38971dea2fd342dd55ddf2ddfbbc3 - Build 
+    .
+    .
+    .
+    
+    conanfile.txt: Generator cmake created conanbuildinfo.cmake
+    conanfile.txt: Generator virtualrunenv created activate_run.ps1
+    conanfile.txt: Generator virtualrunenv created deactivate_run.ps1
+    conanfile.txt: Generator virtualrunenv created environment_run.ps1.env
+    conanfile.txt: Generator virtualrunenv created activate_run.sh
+    conanfile.txt: Generator virtualrunenv created deactivate_run.sh
+    conanfile.txt: Generator virtualrunenv created environment_run.sh.env
+    conanfile.txt: Generator txt created conanbuildinfo.txt
+    conanfile.txt: Generated conaninfo.txt
+    conanfile.txt: Generated graphinfo
+
+and from here we can source the enviroment:
+
+    source activate_run.sh
+    babelc --help
+
+    
+    Usage: babelc <gcc-compiler-options|babelc-options> input-file
+    
+    where babelc options always starts with -babelc and can be:
+    -babelcCompiler          Specify which GNU g++ compiler to use. Values are given
+                             as -babelcCompiler=<value>, where <value> may be either
+                             an absolute or relative path or pathless name (in which
+                             case the environment variable PATH will be used).
+                             Default is "g++".
+    -babelcDirectory         Use this directory as output directory for generated
+                             files. If this option is NOT given, the output file
+                             will be put in the same directory as the originating
+                             header. Values are given as -babelcDirectory=<value>,
+                             where <value> may be either an existing or non-existing
+                             directory (in case it will be created).
+    -babelcForce             Force generation of output even if dependencies are
+                             older than target output.
+    -babelcKeepIntermediate  Keep intermediate preprocessed header file with new
+                             extension ".ii". Non-standard name spaces will be saved
+                             in files with the extension
+                             ".namespace.<namespace-name>". Standard namespaces will
+                             be saved in a file with extension ".namespace.0".
+    -babelcLog               Print internal debug logs to standard output.
+    -babelcNoColor           Disable the gcc coloring of diagnostic messages.
+    -babelcOutput            Specify output generator. Values are given as
+                             -babelcOutput=<value>, where <value> may be any one of
+                             Dep, Ipc, Json, Stream.
+    -babelcSummary           Print a summary of the findings in the submitted header
+                             file on standard output.
+    -babelcUnitTest          Run unit tests instead of the compiler proper. This
+                             will not produce any output files. Test results will
+                             appear on standard error and exit code is 0 if all
+                             tests pass.
+    -babelcUseTabs           Use hard tabs instead of soft tabs in generated code.
 
